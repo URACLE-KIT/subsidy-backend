@@ -102,10 +102,6 @@ public class UserController {
 	            return ResponseEntity.notFound().build();
 	        }
 
-	        if (userDTO.getEmail() != null) {
-	            existingUser.setEmail(userDTO.getEmail());
-	        }
-
 	        if (userDTO.getName() != null) {
 	            existingUser.setName(userDTO.getName());
 	        }
@@ -114,12 +110,19 @@ public class UserController {
 	            existingUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 	        }
 
+			if (userDTO.getUpdated_at() != null) {
+				existingUser.setUpdated_at(userDTO.getUpdated_at());
+			}
+
 	        userService.updateUser(existingUser);
 
 	        UserDTO responseUserDTO = UserDTO.builder()
 	            .email(existingUser.getEmail())
 	            .id(existingUser.getId())
 	            .name(existingUser.getName())
+				.password(passwordEncoder.encode(userDTO.getPassword()))
+				.created_at(userDTO.getCreated_at())
+				.updated_at(userDTO.getUpdated_at())
 	            .build();
 
 	        return ResponseEntity.ok().body(responseUserDTO);
