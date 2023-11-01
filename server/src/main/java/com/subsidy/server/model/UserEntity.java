@@ -35,12 +35,6 @@ public class UserEntity {
     @Column(name = "U_NAME", nullable = false)
     private String name;
 
-    @Column(name = "U_GENDER", nullable = false)
-    private String gender;
-
-    @Column(name = "U_BIRTH")
-    private Date birthday;
-
     @Column(name = "U_CREATED")
     private Date created_at;
 

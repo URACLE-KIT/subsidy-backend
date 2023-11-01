@@ -44,8 +44,6 @@ public class UserController {
 	                .email(userDTO.getEmail())
 	                .password(passwordEncoder.encode(userDTO.getPassword()))
 					.name(userDTO.getName())
-					.gender(userDTO.getGender())
-					.birthday(userDTO.getBirthday())
 					.created_at(userDTO.getCreated_at())
 					.updated_at(userDTO.getUpdated_at())
 	                .build();
@@ -56,8 +54,6 @@ public class UserController {
 					.email(userDTO.getEmail())
 					.password(passwordEncoder.encode(userDTO.getPassword()))
 					.name(userDTO.getName())
-					.gender(userDTO.getGender())
-					.birthday(userDTO.getBirthday())
 					.created_at(userDTO.getCreated_at())
 					.updated_at(userDTO.getUpdated_at())
 	                .build();
@@ -142,7 +138,7 @@ public class UserController {
 	                passwordEncoder);
 
 	        if (!deleted) {
-	            throw new Exception("Invalid email or password");
+	            throw new Exception("이메일 또는 비밀번호가 올바르지 않습니다.");
 	        }
 
 	        return ResponseEntity.ok().body(ResponseDTO.builder().message("Successfully deleted user").build());
