@@ -20,7 +20,6 @@ public class UserService {
         }
 
         final String email = userEntity.getEmail();
-        final String name = userEntity.getName();
 
         if (existsByEmail(email)) {
             log.warn("이메일 중복: {}", email);
