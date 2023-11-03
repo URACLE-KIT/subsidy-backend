@@ -48,7 +48,7 @@ public class PromotionService {
                 .map(promotionEntity -> {
                     PromotionDTO promotionDTO = new PromotionDTO();
                     promotionDTO.setId(promotionEntity.getId());
-                    promotionDTO.setUser_id(promotionEntity.getId());
+                    promotionDTO.setUser_id(promotionEntity.getUser_id());
                     promotionDTO.setTitle(promotionEntity.getTitle());
                     return promotionDTO;
                 })
