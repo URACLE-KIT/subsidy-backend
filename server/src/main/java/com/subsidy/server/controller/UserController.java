@@ -44,8 +44,6 @@ public class UserController {
 	                .email(userDTO.getEmail())
 	                .password(passwordEncoder.encode(userDTO.getPassword()))
 					.name(userDTO.getName())
-					.gender(userDTO.getGender())
-					.birthday(userDTO.getBirthday())
 					.created_at(userDTO.getCreated_at())
 					.updated_at(userDTO.getUpdated_at())
 	                .build();
@@ -56,8 +54,6 @@ public class UserController {
 					.email(userDTO.getEmail())
 					.password(passwordEncoder.encode(userDTO.getPassword()))
 					.name(userDTO.getName())
-					.gender(userDTO.getGender())
-					.birthday(userDTO.getBirthday())
 					.created_at(userDTO.getCreated_at())
 					.updated_at(userDTO.getUpdated_at())
 	                .build();
@@ -106,10 +102,6 @@ public class UserController {
 	            return ResponseEntity.notFound().build();
 	        }
 
-	        if (userDTO.getEmail() != null) {
-	            existingUser.setEmail(userDTO.getEmail());
-	        }
-
 	        if (userDTO.getName() != null) {
 	            existingUser.setName(userDTO.getName());
 	        }
@@ -118,12 +110,19 @@ public class UserController {
 	            existingUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 	        }
 
+			if (userDTO.getUpdated_at() != null) {
+				existingUser.setUpdated_at(userDTO.getUpdated_at());
+			}
+
 	        userService.updateUser(existingUser);
 
 	        UserDTO responseUserDTO = UserDTO.builder()
 	            .email(existingUser.getEmail())
 	            .id(existingUser.getId())
 	            .name(existingUser.getName())
+				.password(null)
+				.created_at(userDTO.getCreated_at())
+				.updated_at(userDTO.getUpdated_at())
 	            .build();
 
 	        return ResponseEntity.ok().body(responseUserDTO);
@@ -132,7 +131,7 @@ public class UserController {
 	        return ResponseEntity.badRequest().body(responseDTO);
 	    }
 	}
-	
+
 	@DeleteMapping("/withdrawal")
 	public ResponseEntity<?> deleteUser(@RequestBody UserDTO userDTO) {
 	    try {
@@ -142,7 +141,7 @@ public class UserController {
 	                passwordEncoder);
 
 	        if (!deleted) {
-	            throw new Exception("Invalid email or password");
+	            throw new Exception("이메일 또는 비밀번호가 올바르지 않습니다.");
 	        }
 
 	        return ResponseEntity.ok().body(ResponseDTO.builder().message("Successfully deleted user").build());

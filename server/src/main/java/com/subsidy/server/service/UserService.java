@@ -20,12 +20,6 @@ public class UserService {
         }
 
         final String email = userEntity.getEmail();
-        final String name = userEntity.getName();
-
-        if (userRepository.existsByName(name)) {
-            log.warn("닉네임 중복: {}", name);
-            throw new RuntimeException("닉네임 중복");
-        }
 
         if (existsByEmail(email)) {
             log.warn("이메일 중복: {}", email);
