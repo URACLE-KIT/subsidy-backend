@@ -41,10 +41,10 @@ public class SubsidyController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<SubsidyDTO>> getAllReports() {
+    public ResponseEntity<List<SubsidyDTO>> getAllSubsidies() {
         try {
-            List<SubsidyDTO> reports = subsidyService.getAllSubsidies();
-            return new ResponseEntity<>(reports, HttpStatus.OK);
+            List<SubsidyDTO> subsidies = subsidyService.getAllSubsidies();
+            return new ResponseEntity<>(subsidies, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ArrayList<SubsidyDTO>(), HttpStatus.BAD_REQUEST);
         }
