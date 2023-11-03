@@ -120,7 +120,7 @@ public class UserController {
 	            .email(existingUser.getEmail())
 	            .id(existingUser.getId())
 	            .name(existingUser.getName())
-				.password(passwordEncoder.encode(userDTO.getPassword()))
+				.password(null)
 				.created_at(userDTO.getCreated_at())
 				.updated_at(userDTO.getUpdated_at())
 	            .build();
@@ -131,7 +131,7 @@ public class UserController {
 	        return ResponseEntity.badRequest().body(responseDTO);
 	    }
 	}
-	
+
 	@DeleteMapping("/withdrawal")
 	public ResponseEntity<?> deleteUser(@RequestBody UserDTO userDTO) {
 	    try {
