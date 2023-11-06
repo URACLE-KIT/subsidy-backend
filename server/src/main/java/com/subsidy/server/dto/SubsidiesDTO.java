@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SubsidyDTO {
+public class SubsidiesDTO {
     private Long id;
     private String title;
+    private String category;
     private String detail_information_url;
     private String description;
     private String application_period;

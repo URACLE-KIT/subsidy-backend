@@ -12,36 +12,39 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SubsidyEntity {
+public class SubsidiesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "S_ID")
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "S_TITLE", nullable = false)
+    @Column(name = "category", nullable = false)
+    private String category;
+
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "S_URL", nullable = false)
+    @Column(name = "detail_information_url", nullable = false)
     private String detail_information_url;
 
-    @Column(name = "S_DESC", nullable = false)
+    @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "S_PERIOD", nullable = false)
+    @Column(name = "application_period", nullable = false)
     private String application_period;
 
-    @Column(name = "S_AGENCY", nullable = false)
+    @Column(name = "receiving_agency", nullable = false)
     private String receiving_agency;
 
-    @Column(name = "S_TEL", nullable = false)
+    @Column(name = "telephone_inquiry", nullable = false, length = 1000)
     private String telephone_inquiry;
 
-    @Column(name = "S_TYPE", nullable = false)
+    @Column(name = "support_type", nullable = false)
     private String support_type;
 
-    @Column(name = "S_PROCESS", nullable = false)
+    @Column(name = "application_process", nullable = false)
     private String application_process;
 
-    @Column(name = "S_PROCESS_URL", nullable = false)
+    @Column(name = "application_process_url", nullable = false)
     private String application_process_url;
 }
