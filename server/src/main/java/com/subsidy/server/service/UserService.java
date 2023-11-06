@@ -40,6 +40,10 @@ public class UserService {
         return null;
     }
 
+    public void updateUser(final UserEntity userEntity) {
+        userRepository.save(userEntity);
+    }
+
     public boolean deleteUser(final String email, final String password, final PasswordEncoder encoder) {
         final UserEntity user = userRepository.findByEmail(email);
         if (user != null && encoder.matches(password, user.getPassword())) {
@@ -53,9 +57,7 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public void updateUser(final UserEntity userEntity) {
-        userRepository.save(userEntity);
-    }
+
     
     public String getUserIdByEmail(String email) {
         UserEntity user = userRepository.findByEmail(email);
@@ -67,13 +69,12 @@ public class UserService {
             return null;
         }
     }
-    
     public UserEntity getUserById(String id) {
         return userRepository.findUserById(id).orElse(null);
     }
-    
-    public boolean existsByName(String name) {
-        return userRepository.existsByName(name);
+
+    public UserEntity getUserByEmail(String email) {
+        return userRepository.findUserByEmail(email).orElse(null);
     }
 
     public boolean existsByEmail(String email) {

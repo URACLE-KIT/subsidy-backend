@@ -23,7 +23,7 @@ import com.subsidy.server.security.TokenProvider;
 import com.subsidy.server.service.UserService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("v1/users")
 public class UserController {
 	@Autowired
 	private UserService userService;
@@ -32,7 +32,38 @@ public class UserController {
 	private TokenProvider tokenProvider;
 	
 	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-	
+	@PostMapping("/signin")
+	public ResponseEntity<?> authenticate(@RequestBody UserDTO userDTO) {
+		try {
+			UserEntity user = userService.getByCredentials(
+					userDTO.getEmail(),
+					userDTO.getPassword(),
+					passwordEncoder);
+
+			if (user == null) {
+				throw new Exception("로그인 실패");
+			}
+
+			final String token = tokenProvider.create(user);
+			final UserDTO responseUserDTO = UserDTO.builder()
+					.email(user.getEmail())
+					.id(user.getId())
+					.name(user.getName())
+					.gender(user.getGender())
+					.birthday(user.getBirthday())
+					.created_at(user.getCreated_at())
+					.updated_at(user.getUpdated_at())
+					.token(token)
+					.build();
+
+			return ResponseEntity.ok().body(responseUserDTO);
+		} catch (Exception e) {
+			ResponseDTO responseDTO = ResponseDTO.builder()
+					.error(e.getMessage())
+					.build();
+			return ResponseEntity.badRequest().body(responseDTO);
+		}
+	}
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO) {
 	    try {
@@ -44,6 +75,8 @@ public class UserController {
 	                .email(userDTO.getEmail())
 	                .password(passwordEncoder.encode(userDTO.getPassword()))
 					.name(userDTO.getName())
+					.gender(userDTO.getGender())
+					.birthday(userDTO.getBirthday())
 					.created_at(userDTO.getCreated_at())
 					.updated_at(userDTO.getUpdated_at())
 	                .build();
@@ -53,6 +86,8 @@ public class UserController {
 					.id(registeredUser.getId())
 					.email(userDTO.getEmail())
 					.password(passwordEncoder.encode(userDTO.getPassword()))
+					.gender(userDTO.getGender())
+					.birthday(userDTO.getBirthday())
 					.name(userDTO.getName())
 					.created_at(userDTO.getCreated_at())
 					.updated_at(userDTO.getUpdated_at())
@@ -63,76 +98,49 @@ public class UserController {
 	        return ResponseEntity.badRequest().body(responseDTO);
 	    }
 	}
-	
-	@PostMapping("/signin")
-	public ResponseEntity<?> authenticate(@RequestBody UserDTO userDTO) {
-	    try {
-	        UserEntity user = userService.getByCredentials(
-	                userDTO.getEmail(),
-	                userDTO.getPassword(),
-	                passwordEncoder);
 
-	        if (user == null) {
-	            throw new Exception("로그인 실패");
-	        }
 
-	        final String token = tokenProvider.create(user);
-	        final UserDTO responseUserDTO = UserDTO.builder()
-	                .email(user.getEmail())
-	                .id(user.getId())
-	                .name(user.getName())
-	                .token(token)
-	                .build();
+	@PatchMapping("/update")
+	public ResponseEntity<?> updateUser(@RequestParam String id, @RequestBody UserDTO userDTO) {
+		try {
+			UserEntity existingUser = userService.getUserById(id);
 
-	        return ResponseEntity.ok().body(responseUserDTO);
-	    } catch (Exception e) {
-	        ResponseDTO responseDTO = ResponseDTO.builder()
-	                .error(e.getMessage())
-	                .build();
-	        return ResponseEntity.badRequest().body(responseDTO);
-	    }
-	}
-
-	@PatchMapping("/update/{id}")
-	public ResponseEntity<?> updateUser(@PathVariable String id, @RequestBody UserDTO userDTO) {
-	    try {
-	        UserEntity existingUser = userService.getUserById(id);
-
-	        if (existingUser == null) {
-	            return ResponseEntity.notFound().build();
-	        }
-
-	        if (userDTO.getName() != null) {
-	            existingUser.setName(userDTO.getName());
-	        }
-
-	        if (userDTO.getPassword() != null) {
-	            existingUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-	        }
-
-			if (userDTO.getUpdated_at() != null) {
-				existingUser.setUpdated_at(userDTO.getUpdated_at());
+			if (existingUser == null) {
+				return ResponseEntity.notFound().build();
 			}
 
-	        userService.updateUser(existingUser);
+			if (userDTO.getName() != null) {
+				existingUser.setName(userDTO.getName());
+			}
 
-	        UserDTO responseUserDTO = UserDTO.builder()
-	            .email(existingUser.getEmail())
-	            .id(existingUser.getId())
-	            .name(existingUser.getName())
-				.password(null)
-				.created_at(userDTO.getCreated_at())
-				.updated_at(userDTO.getUpdated_at())
-	            .build();
+			if (userDTO.getPassword() != null) {
+				existingUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+			}
 
-	        return ResponseEntity.ok().body(responseUserDTO);
-	    } catch (Exception e) {
-	        ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
-	        return ResponseEntity.badRequest().body(responseDTO);
-	    }
+			if (userDTO.getBirthday() != null) {
+				existingUser.setBirthday(userDTO.getBirthday());
+			}
+
+			userService.updateUser(existingUser);
+
+			UserDTO responseUserDTO = UserDTO.builder()
+					.email(existingUser.getEmail())
+					.id(existingUser.getId())
+					.name(existingUser.getName())
+					.birthday(existingUser.getBirthday())
+					.password(null)
+					.created_at(userDTO.getCreated_at())
+					.updated_at(userDTO.getUpdated_at())
+					.build();
+
+			return ResponseEntity.ok().body(responseUserDTO);
+		} catch (Exception e) {
+			ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
+			return ResponseEntity.badRequest().body(responseDTO);
+		}
 	}
 
-	@DeleteMapping("/withdrawal")
+	@DeleteMapping("/delete")
 	public ResponseEntity<?> deleteUser(@RequestBody UserDTO userDTO) {
 	    try {
 	        boolean deleted = userService.deleteUser(
@@ -150,59 +158,59 @@ public class UserController {
 	        return ResponseEntity.badRequest().body(responseDTO);
 	    }
 	}
-	
-	@GetMapping("/find/{email}")
-    public ResponseEntity<?> findUserIdByEmail(@PathVariable String email) {
-        try {
-            String userId = userService.getUserIdByEmail(email);
 
-            if (userId != null) {
-                return ResponseEntity.ok(Map.of("id", userId));
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
-    }
-	
-	@PostMapping("/reset")
-    public ResponseEntity<?> resetPassword(@RequestParam String id, @RequestParam String newPassword) {
-        try {
-            UserEntity user = userService.getUserById(id);
 
-            if (user != null) {
-                user.setPassword(passwordEncoder.encode(newPassword));
-                userService.updateUser(user);
-                return ResponseEntity.ok(ResponseDTO.builder().message("비밀번호 변경 성공").build());
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
-            return ResponseEntity.badRequest().body(responseDTO);
-        }
-    }
-	
-	@GetMapping("/checkUsername/{name}")
-	public ResponseEntity<?> checkUsername(@PathVariable String name) {
-	    boolean usernameExists = userService.existsByName(name);
+	@PostMapping("/update/password")
+	public ResponseEntity<?> updatePassword(@RequestBody UserDTO userDTO) {
+		try {
+			UserEntity user = userService.getUserByEmail(userDTO.getEmail());
 
-	    if (usernameExists) {
-	        return ResponseEntity.ok(Map.of("exists", true));
-	    } else {
-	        return ResponseEntity.ok(Map.of("exists", false));
-	    }
+
+			if (user != null) {
+				// Check if the current password matches the stored password
+				if (passwordEncoder.matches(userDTO.getCurrentPassword(), user.getPassword())) {
+					// If they match, update the password
+					user.setPassword(passwordEncoder.encode(userDTO.getNewPassword()));
+					userService.updateUser(user);
+					return ResponseEntity.ok(ResponseDTO.builder().message("Password change successful").build());
+				} else {
+					return ResponseEntity.badRequest().body(ResponseDTO.builder().error("Current password is incorrect").build());
+				}
+			} else {
+				return ResponseEntity.notFound().build();
+			}
+		} catch (Exception e) {
+			ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
+			return ResponseEntity.badRequest().body(responseDTO);
+		}
 	}
-	
-	@GetMapping("/checkEmail/{email}")
-	public ResponseEntity<?> checkEmail(@PathVariable String email) {
-	    boolean emailExists = userService.existsByEmail(email);
 
-	    if (emailExists) {
-	        return ResponseEntity.ok(Map.of("exists", true));
-	    } else {
-	        return ResponseEntity.ok(Map.of("exists", false));
-	    }
+
+	@GetMapping("/find/userid")
+	public ResponseEntity<?> findUserIdByEmail(@RequestParam String email) {
+		try {
+			String userId = userService.getUserIdByEmail(email);
+
+			if (userId != null) {
+				return ResponseEntity.ok(Map.of("id", userId));
+			} else {
+				return ResponseEntity.notFound().build();
+			}
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
 	}
+
+
+	@GetMapping("/check/email")
+	public ResponseEntity<?> checkEmail(@RequestParam String email) {
+		boolean emailExists = userService.existsByEmail(email);
+
+		if (emailExists) {
+			return ResponseEntity.ok(Map.of("exists", true));
+		} else {
+			return ResponseEntity.ok(Map.of("exists", false));
+		}
+	}
+
 }

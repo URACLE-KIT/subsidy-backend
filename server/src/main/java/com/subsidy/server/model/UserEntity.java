@@ -1,43 +1,50 @@
 package com.subsidy.server.model;
 
 import java.sql.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import java.sql.Timestamp;
+import javax.persistence.*;
+
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Data
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "USERS", uniqueConstraints = {@UniqueConstraint(columnNames = "U_EMAIL"), @UniqueConstraint(columnNames = "U_NAME")})
+@Table(name = "USERS", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public class UserEntity {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(name = "U_ID")
+    @Column(name = "id")
     private String id;
 
-    @Column(name = "U_EMAIL", nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "U_PW", nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "U_NAME", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "U_CREATED")
-    private Date created_at;
+    @Column(name = "gender", nullable = false)
+    private char gender;
 
-    @Column(name = "U_UPDATED")
-    private Date updated_at;
+    @Column(name = "birthday")
+    private Date birthday;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    @CreationTimestamp
+    private Timestamp created_at;
+
+    @Column(name = "updated_at", nullable = false)
+    @UpdateTimestamp
+    private Timestamp updated_at;
 }
