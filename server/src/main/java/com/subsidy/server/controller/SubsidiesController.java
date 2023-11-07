@@ -80,6 +80,7 @@ public class SubsidiesController {
             subsidyDTO.setSupport_type(subsidy.getSupport_type());
             subsidyDTO.setApplication_process(subsidy.getApplication_process());
             subsidyDTO.setApplication_process_url(subsidy.getApplication_process_url());
+            subsidyDTO.setViews(subsidy.getViews());
 
             return ResponseEntity.ok(subsidyDTO);
         } else {

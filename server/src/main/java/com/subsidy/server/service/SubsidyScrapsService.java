@@ -9,6 +9,7 @@ import com.subsidy.server.persistence.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.*;
@@ -17,8 +18,12 @@ import java.util.*;
 @Service
 public class SubsidyScrapsService {
 
+    private final SubsidyScrapsRepository subsidyScrapsRepository;
+
     @Autowired
-    private SubsidyScrapsRepository subsidyScrapsRepository;
+    public SubsidyScrapsService(SubsidyScrapsRepository subsidyScrapsRepository) {
+        this.subsidyScrapsRepository = subsidyScrapsRepository;
+    }
 
     @Autowired
     private UserRepository userRepository;
@@ -39,15 +44,7 @@ public class SubsidyScrapsService {
             return null;
         }
     }
-    public boolean deleteScrapById(Long scrapId) {
-        if (scrapId != null) {
-            if (subsidyScrapsRepository.existsById(scrapId)) {
-                subsidyScrapsRepository.deleteById(scrapId);
-                return true;
-            }
-        }
-        return false;
-    }
+
     public List<SubsidiesEntity> getSubsidyInfoByUserId(String userId) {
         List<SubsidiesEntity> subsidiesList = new ArrayList<>();
 
@@ -61,6 +58,21 @@ public class SubsidyScrapsService {
             }
         }
         return subsidiesList;
+    }
+
+    public boolean deleteScrapById(Long scrapId) {
+        if (scrapId != null) {
+            if (subsidyScrapsRepository.existsById(scrapId)) {
+                subsidyScrapsRepository.deleteById(scrapId);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Transactional
+    public void deleteSubsidyScrapsBySubsidyId(Long subsidyId) {
+        subsidyScrapsRepository.deleteBySubsidyId(subsidyId);
     }
 
 

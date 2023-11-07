@@ -62,6 +62,7 @@ public class SubsidiesService {
         subsidyDTO.setSupport_type(subsidyEntity.getSupport_type());
         subsidyDTO.setApplication_process(subsidyEntity.getApplication_process());
         subsidyDTO.setApplication_process_url(subsidyEntity.getApplication_process_url());
+        subsidyDTO.setViews(subsidyEntity.getViews());
         return subsidyDTO;
     }
 
