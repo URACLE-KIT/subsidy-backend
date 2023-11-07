@@ -60,7 +60,6 @@ public class SubsidyScrapsService {
                 subsidiesList.add(subsidy);
             }
         }
-
         return subsidiesList;
     }
 

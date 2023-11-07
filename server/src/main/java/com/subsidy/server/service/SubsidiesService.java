@@ -38,6 +38,16 @@ public class SubsidiesService {
                 .map(this::mapSubsidiesEntityToDTO)
                 .collect(Collectors.toList());
     }
+    public List<SubsidiesDTO> searchSubsidyByDescriptionList(String category) {
+        List<SubsidiesEntity> subsidyEntities = subsidyRepository.findByDescriptionContaining(category);
+        return subsidyEntities.stream()
+                .map(this::mapSubsidiesEntityToDTO)
+                .collect(Collectors.toList());
+    }
+
+    public Optional<SubsidiesEntity> getSubsidyById(Long id) {
+        return subsidyRepository.findById(id);
+    }
 
     private SubsidiesDTO mapSubsidiesEntityToDTO(SubsidiesEntity subsidyEntity) {
         SubsidiesDTO subsidyDTO = new SubsidiesDTO();
