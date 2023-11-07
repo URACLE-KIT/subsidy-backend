@@ -47,4 +47,7 @@ public class SubsidiesEntity {
 
     @Column(name = "application_process_url", nullable = false)
     private String application_process_url;
+
+    @Column(columnDefinition = "INT DEFAULT 0")
+    private int views;
 }

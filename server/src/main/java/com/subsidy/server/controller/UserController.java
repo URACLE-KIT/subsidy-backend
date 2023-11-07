@@ -167,9 +167,7 @@ public class UserController {
 
 
 			if (user != null) {
-				// Check if the current password matches the stored password
 				if (passwordEncoder.matches(userDTO.getCurrentPassword(), user.getPassword())) {
-					// If they match, update the password
 					user.setPassword(passwordEncoder.encode(userDTO.getNewPassword()));
 					userService.updateUser(user);
 					return ResponseEntity.ok(ResponseDTO.builder().message("Password change successful").build());

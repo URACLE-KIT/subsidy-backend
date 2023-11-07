@@ -21,4 +21,5 @@ public class SubsidiesDTO {
     private String support_type;
     private String application_process;
     private String application_process_url;
+    private int views;
 }
