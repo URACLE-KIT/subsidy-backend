@@ -14,4 +14,6 @@ public interface SubsidiesRepository extends JpaRepository<SubsidiesEntity, Long
     List<SubsidiesEntity> findByCategoryContaining(String category);
     List<SubsidiesEntity> findByDescriptionContaining(String description);
 
+
+
 }

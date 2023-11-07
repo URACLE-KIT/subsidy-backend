@@ -2,6 +2,7 @@ package com.subsidy.server.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.subsidy.server.dto.SubsidiesDTO;
 import com.subsidy.server.model.SubsidiesEntity;
@@ -49,4 +50,43 @@ public class SubsidiesController {
             return new ResponseEntity<>(new ArrayList<SubsidiesDTO>(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/search/description")
+    public ResponseEntity<List<SubsidiesDTO>> searchSubsidyByDescription(@RequestParam(name = "description") String description) {
+        try {
+            List<SubsidiesDTO> subsidies = subsidyService.searchSubsidyByDescriptionList(description);
+            return new ResponseEntity<>(subsidies, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ArrayList<SubsidiesDTO>(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    @GetMapping("/id")
+    public ResponseEntity<SubsidiesDTO> getSubsidyById(@RequestParam Long id) {
+        Optional<SubsidiesEntity> subsidyOptional = subsidyService.getSubsidyById(id);
+
+        if (subsidyOptional.isPresent()) {
+            SubsidiesEntity subsidy = subsidyOptional.get();
+            SubsidiesDTO subsidyDTO = new SubsidiesDTO();
+            subsidyDTO.setId(subsidy.getId());
+            subsidyDTO.setTitle(subsidy.getTitle());
+            subsidyDTO.setCategory(subsidy.getCategory());
+            subsidyDTO.setDetail_information_url(subsidy.getDetail_information_url());
+            subsidyDTO.setDescription(subsidy.getDescription());
+            subsidyDTO.setApplication_period(subsidy.getApplication_period());
+            subsidyDTO.setReceiving_agency(subsidy.getReceiving_agency());
+            subsidyDTO.setTelephone_inquiry(subsidy.getTelephone_inquiry());
+            subsidyDTO.setSupport_type(subsidy.getSupport_type());
+            subsidyDTO.setApplication_process(subsidy.getApplication_process());
+            subsidyDTO.setApplication_process_url(subsidy.getApplication_process_url());
+
+            return ResponseEntity.ok(subsidyDTO);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+
 }
