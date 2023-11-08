@@ -60,16 +60,6 @@ public class SubsidyScrapsService {
         return subsidiesList;
     }
 
-    public boolean deleteScrapById(Long scrapId) {
-        if (scrapId != null) {
-            if (subsidyScrapsRepository.existsById(scrapId)) {
-                subsidyScrapsRepository.deleteById(scrapId);
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Transactional
     public void deleteSubsidyScrapsBySubsidyId(Long subsidyId) {
         subsidyScrapsRepository.deleteBySubsidyId(subsidyId);

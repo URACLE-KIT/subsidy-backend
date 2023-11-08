@@ -30,7 +30,7 @@ public class SubsidyScrapsController {
         }
     }
 
-    @GetMapping("/find/subsidyinfo")
+    @GetMapping("/search/subsidyinfo")
     public ResponseEntity<List<SubsidiesEntity>> getSubsidyInfoByUserId(@RequestParam String userId) {
         List<SubsidiesEntity> subsidiesList = subsidyScrapsService.getSubsidyInfoByUserId(userId);
 
@@ -42,17 +42,6 @@ public class SubsidyScrapsController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteSubsidyScrap(@RequestParam Long scrapId) {
-        boolean deleted = subsidyScrapsService.deleteScrapById(scrapId);
-
-        if (deleted) {
-            return ResponseEntity.ok("Subsidy Scrap deleted successfully.");
-        } else {
-            return ResponseEntity.badRequest().body("Scrap not found or unable to delete.");
-        }
-    }
-
-    @DeleteMapping("/deleteBySubsidyId")
     public ResponseEntity<String> deleteSubsidyScrapsBySubsidyId(@RequestParam Long subsidyId) {
         subsidyScrapsService.deleteSubsidyScrapsBySubsidyId(subsidyId);
         return ResponseEntity.ok("Subsidy scraps deleted successfully.");

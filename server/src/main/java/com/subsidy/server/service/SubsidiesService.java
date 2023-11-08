@@ -3,12 +3,17 @@ package com.subsidy.server.service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import com.subsidy.server.model.SubsidyReviewsEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.subsidy.server.persistence.SubsidiesRepository;
 import com.subsidy.server.dto.SubsidiesDTO;
 import com.subsidy.server.model.SubsidiesEntity;
 
+
+@Slf4j
 @Service
 public class SubsidiesService {
     private final SubsidiesRepository subsidyRepository;
@@ -64,6 +69,17 @@ public class SubsidiesService {
         subsidyDTO.setApplication_process_url(subsidyEntity.getApplication_process_url());
         subsidyDTO.setViews(subsidyEntity.getViews());
         return subsidyDTO;
+    }
+
+
+    public SubsidiesEntity incrementViews(Long id) {
+        SubsidiesEntity subsidy = subsidyRepository.findById(id).orElse(null);
+        if (subsidy != null) {
+            subsidy.setViews(subsidy.getViews() + 1);
+            return subsidyRepository.save(subsidy);
+        } else {
+            return null;
+        }
     }
 
 
