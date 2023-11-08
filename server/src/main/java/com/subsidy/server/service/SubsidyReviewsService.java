@@ -83,6 +83,10 @@ public class SubsidyReviewsService {
         }
     }
 
+    public List<SubsidyReviewsEntity> getAllSubsidyReviews() {
+        return subsidyReviewsRepository.findAll();
+    }
+
 
 
 }
