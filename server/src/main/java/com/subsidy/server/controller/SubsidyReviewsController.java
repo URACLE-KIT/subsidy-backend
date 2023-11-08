@@ -97,6 +97,17 @@ public class SubsidyReviewsController {
     }
 
 
+    @GetMapping("/all")
+    public ResponseEntity<List<SubsidyReviewsEntity>> getAllReviews() {
+        List<SubsidyReviewsEntity> reviews = subsidyReviewsService.getAllSubsidyReviews();
+        if (reviews != null && !reviews.isEmpty()) {
+            return ResponseEntity.ok(reviews);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+
 
 
 }
