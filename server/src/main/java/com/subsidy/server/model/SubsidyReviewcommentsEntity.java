@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "SUBSIDYREVIEWCOMMENTS")
-public class SubsidyReviewcommentsEntity {
+public class SubsidyReviewCommentsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
