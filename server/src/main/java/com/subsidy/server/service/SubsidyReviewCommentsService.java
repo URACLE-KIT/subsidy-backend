@@ -1,6 +1,6 @@
 package com.subsidy.server.service;
 
-import com.subsidy.server.model.SubsidyReviewcommentsEntity;
+import com.subsidy.server.model.SubsidyReviewCommentsEntity;
 import com.subsidy.server.model.SubsidyReviewsEntity;
 import com.subsidy.server.model.UserEntity;
 import com.subsidy.server.persistence.SubsidyReviewCommentsRepository;
@@ -29,12 +29,12 @@ public class SubsidyReviewCommentsService {
     @Autowired
     private SubsidyReviewsRepository subsidyReviewsRepository;
 
-    public SubsidyReviewcommentsEntity createReviewComment(String userId, Long reviewId, SubsidyReviewcommentsEntity reviewComments) {
+    public SubsidyReviewCommentsEntity createReviewComment(String userId, Long reviewId, SubsidyReviewCommentsEntity reviewComments) {
         UserEntity user = userRepository.findById(userId).orElse(null);
         SubsidyReviewsEntity review = subsidyReviewsRepository.findById(reviewId).orElse(null);
 
         if (user != null && review != null) {
-            SubsidyReviewcommentsEntity comments = new SubsidyReviewcommentsEntity();
+            SubsidyReviewCommentsEntity comments = new SubsidyReviewCommentsEntity();
             comments.setUser(user);
             comments.setReviews(review);
             comments.setContent(reviewComments.getContent());
@@ -44,11 +44,11 @@ public class SubsidyReviewCommentsService {
         }
     }
 
-    public SubsidyReviewcommentsEntity getCommentById(Long commentId) {
+    public SubsidyReviewCommentsEntity getCommentById(Long commentId) {
         return subsidyReviewCommentsRepository.findById(commentId).orElse(null);
     }
 
-    public SubsidyReviewcommentsEntity updateReviewcomment(SubsidyReviewcommentsEntity comments) {
+    public SubsidyReviewCommentsEntity updateReviewcomment(SubsidyReviewCommentsEntity comments) {
         return subsidyReviewCommentsRepository.save(comments);
     }
 
@@ -56,11 +56,11 @@ public class SubsidyReviewCommentsService {
         subsidyReviewsRepository.deleteById(commentId);
     }
 
-    public List<SubsidyReviewcommentsEntity> getCommentsByUserId(String userId) {
+    public List<SubsidyReviewCommentsEntity> getCommentsByUserId(String userId) {
         return subsidyReviewCommentsRepository.findByUserId(userId);
     }
 
-    public List<SubsidyReviewcommentsEntity> getAllComments() {
+    public List<SubsidyReviewCommentsEntity> getAllComments() {
         return subsidyReviewCommentsRepository.findAll();
     }
 

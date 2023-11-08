@@ -1,7 +1,6 @@
 package com.subsidy.server.controller;
 
-import com.subsidy.server.dto.SubsidyReviewcommentsDTO;
-import com.subsidy.server.model.SubsidyReviewcommentsEntity;
+import com.subsidy.server.model.SubsidyReviewCommentsEntity;
 import com.subsidy.server.service.SubsidyReviewCommentsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +19,12 @@ public class SubsidyReviewCommentsController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<SubsidyReviewcommentsEntity> createReviewComment(
+    public ResponseEntity<SubsidyReviewCommentsEntity> createReviewComment(
             @RequestParam String userId,
             @RequestParam Long reviewId,
-            @RequestBody SubsidyReviewcommentsEntity reviewComments
+            @RequestBody SubsidyReviewCommentsEntity reviewComments
     ) {
-        SubsidyReviewcommentsEntity reviewcommentsEntity = subsidyReviewCommentsService.createReviewComment(userId, reviewId, reviewComments);
+        SubsidyReviewCommentsEntity reviewcommentsEntity = subsidyReviewCommentsService.createReviewComment(userId, reviewId, reviewComments);
 
         if (reviewcommentsEntity != null) {
             return ResponseEntity.status(HttpStatus.CREATED).body(reviewcommentsEntity);
@@ -35,18 +34,18 @@ public class SubsidyReviewCommentsController {
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<SubsidyReviewcommentsEntity> updateReviewComment(
+    public ResponseEntity<SubsidyReviewCommentsEntity> updateReviewComment(
             @RequestParam Long commentId,
-            @RequestBody SubsidyReviewcommentsEntity reviewComment
+            @RequestBody SubsidyReviewCommentsEntity reviewComment
     ) {
-        SubsidyReviewcommentsEntity existingComment = subsidyReviewCommentsService.getCommentById(commentId);
+        SubsidyReviewCommentsEntity existingComment = subsidyReviewCommentsService.getCommentById(commentId);
 
         if (existingComment != null) {
             if (reviewComment.getContent() != null) {
                 existingComment.setContent(reviewComment.getContent());
             }
 
-            SubsidyReviewcommentsEntity updatedComment = subsidyReviewCommentsService.updateReviewcomment(existingComment);
+            SubsidyReviewCommentsEntity updatedComment = subsidyReviewCommentsService.updateReviewcomment(existingComment);
             return ResponseEntity.ok(updatedComment);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -54,10 +53,8 @@ public class SubsidyReviewCommentsController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteReviewComment(
-            @RequestParam Long commentId
-    ) {
-        SubsidyReviewcommentsEntity existingComment = subsidyReviewCommentsService.getCommentById(commentId);
+    public ResponseEntity<String> deleteReviewComment(@RequestParam Long commentId) {
+        SubsidyReviewCommentsEntity existingComment = subsidyReviewCommentsService.getCommentById(commentId);
 
         if (existingComment != null) {
             subsidyReviewCommentsService.deleteSubsidyReview(commentId);
@@ -68,8 +65,8 @@ public class SubsidyReviewCommentsController {
     }
 
     @GetMapping("/search/user")
-    public ResponseEntity<List<SubsidyReviewcommentsEntity>> getCommentsByUserId(@RequestParam String userId) {
-        List<SubsidyReviewcommentsEntity> comments = subsidyReviewCommentsService.getCommentsByUserId(userId);
+    public ResponseEntity<List<SubsidyReviewCommentsEntity>> getCommentsByUserId(@RequestParam String userId) {
+        List<SubsidyReviewCommentsEntity> comments = subsidyReviewCommentsService.getCommentsByUserId(userId);
 
         if (comments != null && !comments.isEmpty()) {
             return ResponseEntity.ok(comments);
@@ -79,8 +76,8 @@ public class SubsidyReviewCommentsController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<SubsidyReviewcommentsEntity>> getAllComments() {
-        List<SubsidyReviewcommentsEntity> comments = subsidyReviewCommentsService.getAllComments();
+    public ResponseEntity<List<SubsidyReviewCommentsEntity>> getAllComments() {
+        List<SubsidyReviewCommentsEntity> comments = subsidyReviewCommentsService.getAllComments();
         if (comments != null && !comments.isEmpty()) {
             return ResponseEntity.ok(comments);
         } else {
