@@ -11,8 +11,6 @@ public interface SubsidyScrapsRepository extends JpaRepository<SubsidyScrapsEnti
 
     Optional<SubsidyScrapsEntity> findById(Long id);
     List<SubsidyScrapsEntity> findByUserId(String userId);
-    void deleteById(Long id);
-
     @Transactional
     void deleteBySubsidyId(Long subsidyId);
 

@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.subsidy.server.dto.SubsidiesDTO;
 import com.subsidy.server.model.SubsidiesEntity;
+import com.subsidy.server.model.SubsidyReviewsEntity;
 import com.subsidy.server.service.SubsidiesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -88,6 +89,15 @@ public class SubsidiesController {
         }
     }
 
+    @PutMapping("/increment-views")
+    public ResponseEntity<SubsidiesEntity> incrementLikes(@RequestParam Long id) {
+        SubsidiesEntity subsidy = subsidyService.incrementViews(id);
+        if (subsidy != null) {
+            return ResponseEntity.ok(subsidy);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
 
 
 }
