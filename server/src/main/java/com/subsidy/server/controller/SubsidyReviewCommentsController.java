@@ -1,8 +1,6 @@
 package com.subsidy.server.controller;
 
-import com.subsidy.server.dto.SubsidyReviewcommentsDTO;
 import com.subsidy.server.model.SubsidyReviewCommentsEntity;
-import com.subsidy.server.model.SubsidyReviewcommentsEntity;
 import com.subsidy.server.service.SubsidyReviewCommentsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

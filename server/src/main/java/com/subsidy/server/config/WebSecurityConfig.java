@@ -43,7 +43,7 @@ public class WebSecurityConfig {
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-            .antMatchers("/","/v1/users/**").permitAll()
+            .antMatchers("/","/v1/**").permitAll()
             .anyRequest()
             .authenticated()
             .and()
