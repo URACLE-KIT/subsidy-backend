@@ -76,6 +76,18 @@ public class SubsidyReviewsController {
         }
     }
 
+    @GetMapping("/search/subsidy")
+    public ResponseEntity<List<SubsidyReviewsEntity>> getReviewsByUserId(@RequestParam Long subsidyId) {
+        List<SubsidyReviewsEntity> reviews = subsidyReviewsService.getReviewsBySubsidyId(subsidyId);
+
+        if (reviews != null && !reviews.isEmpty()) {
+            return ResponseEntity.ok(reviews);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+
     @PutMapping("/increment-views")
     public ResponseEntity<SubsidyReviewsEntity> incrementViews(@RequestParam Long id) {
         SubsidyReviewsEntity review = subsidyReviewsService.incrementViews(id);

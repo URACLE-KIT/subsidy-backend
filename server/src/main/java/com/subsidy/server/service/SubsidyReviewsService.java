@@ -62,6 +62,10 @@ public class SubsidyReviewsService {
         return subsidyReviewsRepository.findByUserId(userId);
     }
 
+    public List<SubsidyReviewsEntity> getReviewsBySubsidyId(Long subsidyId){
+        return subsidyReviewsRepository.findBySubsidyId(subsidyId);
+    }
+
 
     public SubsidyReviewsEntity incrementViews(Long id) {
         SubsidyReviewsEntity review = subsidyReviewsRepository.findById(id).orElse(null);

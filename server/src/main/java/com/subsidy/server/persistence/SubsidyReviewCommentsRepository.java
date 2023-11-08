@@ -8,5 +8,7 @@ import java.util.List;
 public interface SubsidyReviewCommentsRepository extends JpaRepository<SubsidyReviewCommentsEntity, Long> {
     List<SubsidyReviewCommentsEntity> findByUserId(String userId);
 
+    List<SubsidyReviewCommentsEntity> findByReviewsId(Long reviewsId);
+
 }
 

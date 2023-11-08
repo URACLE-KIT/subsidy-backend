@@ -1,8 +1,6 @@
 package com.subsidy.server.controller;
 
-import com.subsidy.server.dto.SubsidyReviewcommentsDTO;
 import com.subsidy.server.model.SubsidyReviewCommentsEntity;
-import com.subsidy.server.model.SubsidyReviewcommentsEntity;
 import com.subsidy.server.service.SubsidyReviewCommentsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -76,6 +74,21 @@ public class SubsidyReviewCommentsController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+
+    @GetMapping("/search/subsidyReviewId")
+    public ResponseEntity<List<SubsidyReviewCommentsEntity>> getCommentsBySubsidyReviewId(@RequestParam Long subsidyReviewId) {
+        List<SubsidyReviewCommentsEntity> comments = subsidyReviewCommentsService.getCommentsBySubsidyReviewId(subsidyReviewId);
+
+        if (comments != null && !comments.isEmpty()) {
+            return ResponseEntity.ok(comments);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+
+
+
 
     @GetMapping("/all")
     public ResponseEntity<List<SubsidyReviewCommentsEntity>> getAllComments() {
