@@ -96,7 +96,6 @@ public class SubsidyReviewsController {
         }
     }
 
-
     @GetMapping("/all")
     public ResponseEntity<List<SubsidyReviewsEntity>> getAllReviews() {
         List<SubsidyReviewsEntity> reviews = subsidyReviewsService.getAllSubsidyReviews();

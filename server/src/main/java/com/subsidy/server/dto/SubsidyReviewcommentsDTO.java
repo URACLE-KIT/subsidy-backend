@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SubsidyReviewcommentsDTO {
+public class SubsidyReviewCommentsDTO {
     private Long id;
     private UserEntity user;
     private SubsidyReviewsEntity reviews;
