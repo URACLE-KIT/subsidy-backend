@@ -64,7 +64,7 @@ public class SubsidyReviewCommentsController {
         }
     }
 
-    @GetMapping("/search/user")
+    @GetMapping("/search/userId")
     public ResponseEntity<List<SubsidyReviewCommentsEntity>> getCommentsByUserId(@RequestParam String userId) {
         List<SubsidyReviewCommentsEntity> comments = subsidyReviewCommentsService.getCommentsByUserId(userId);
 

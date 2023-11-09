@@ -62,7 +62,7 @@ public class SubsidiesController {
     }
 
 
-    @GetMapping("/id")
+    @GetMapping("/subsidyId")
     public ResponseEntity<SubsidiesDTO> getSubsidyById(@RequestParam Long id) {
         Optional<SubsidiesEntity> subsidyOptional = subsidyService.getSubsidyById(id);
 

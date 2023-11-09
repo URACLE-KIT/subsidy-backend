@@ -66,7 +66,7 @@ public class SubsidyReviewsController {
 
     }
 
-    @GetMapping("/search/user")
+    @GetMapping("/search/userId")
     public ResponseEntity<List<SubsidyReviewsEntity>> getReviewsByUserId(@RequestParam String userId) {
         List<SubsidyReviewsEntity> reviews = subsidyReviewsService.getReviewsByUserId(userId);
 
@@ -88,7 +88,7 @@ public class SubsidyReviewsController {
         }
     }
 
-    @GetMapping("/search/subsidy")
+    @GetMapping("/search/subsidyId")
     public ResponseEntity<List<SubsidyReviewsEntity>> getReviewsByUserId(@RequestParam Long subsidyId) {
         List<SubsidyReviewsEntity> reviews = subsidyReviewsService.getReviewsBySubsidyId(subsidyId);
 
