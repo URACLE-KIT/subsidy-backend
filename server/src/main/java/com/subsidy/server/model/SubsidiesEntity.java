@@ -50,4 +50,7 @@ public class SubsidiesEntity {
 
     @Column(columnDefinition = "INT DEFAULT 0")
     private int views;
+
+    @Column(columnDefinition = "INT DEFAULT 0")
+    private int numComments;
 }

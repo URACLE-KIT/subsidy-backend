@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.subsidy.server.model.SubsidyReviewsEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,6 +67,7 @@ public class SubsidiesService {
         subsidyDTO.setApplication_process(subsidyEntity.getApplication_process());
         subsidyDTO.setApplication_process_url(subsidyEntity.getApplication_process_url());
         subsidyDTO.setViews(subsidyEntity.getViews());
+        subsidyDTO.setNumComments(subsidyEntity.getNumComments());
         return subsidyDTO;
     }
 
