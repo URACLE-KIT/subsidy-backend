@@ -75,6 +75,21 @@ public class SubsidyReviewCommentsController {
         }
     }
 
+    @GetMapping("/search/subsidyReviewId")
+    public ResponseEntity<List<SubsidyReviewCommentsEntity>> getCommentsBySubsidyReviewId(@RequestParam Long subsidyReviewId) {
+        List<SubsidyReviewCommentsEntity> comments = subsidyReviewCommentsService.getCommentsBySubsidyReviewId(subsidyReviewId);
+
+        if (comments != null && !comments.isEmpty()) {
+            return ResponseEntity.ok(comments);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+
+
+
+
     @GetMapping("/all")
     public ResponseEntity<List<SubsidyReviewCommentsEntity>> getAllComments() {
         List<SubsidyReviewCommentsEntity> comments = subsidyReviewCommentsService.getAllComments();

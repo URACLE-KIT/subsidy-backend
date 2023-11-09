@@ -60,6 +60,12 @@ public class SubsidyReviewCommentsService {
         return subsidyReviewCommentsRepository.findByUserId(userId);
     }
 
+    public List<SubsidyReviewCommentsEntity> getCommentsBySubsidyReviewId(Long subsidyReviewId) {
+        return subsidyReviewCommentsRepository.findByReviewsId(subsidyReviewId);
+    }
+
+
+
     public List<SubsidyReviewCommentsEntity> getAllComments() {
         return subsidyReviewCommentsRepository.findAll();
     }
