@@ -87,9 +87,6 @@ public class SubsidyReviewCommentsController {
     }
 
 
-
-
-
     @GetMapping("/all")
     public ResponseEntity<List<SubsidyReviewCommentsEntity>> getAllComments() {
         List<SubsidyReviewCommentsEntity> comments = subsidyReviewCommentsService.getAllComments();
