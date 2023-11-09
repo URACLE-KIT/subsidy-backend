@@ -1,5 +1,6 @@
 package com.subsidy.server.model;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -40,4 +41,5 @@ public class SubsidyReviewCommentsEntity {
     @Column(name = "updated_at", nullable = false)
     @UpdateTimestamp
     private Timestamp updated_at;
+
 }
