@@ -81,7 +81,7 @@ public class SubsidyPromotionController {
         }
     }
 
-    @GetMapping("/search/user")
+    @GetMapping("/search/userId")
     public ResponseEntity<List<SubsidyPromotionEntity>> getSubsidyPromotionsByUserId(@RequestParam String userId) {
         List<SubsidyPromotionEntity> promotions = subsidyPromotionService.getSubsidyPromotionByUserId(userId);
 

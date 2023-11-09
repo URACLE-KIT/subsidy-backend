@@ -64,7 +64,7 @@ public class SubsidyReviewCommentsController {
         }
     }
 
-    @GetMapping("/search/user")
+    @GetMapping("/search/userId")
     public ResponseEntity<List<SubsidyReviewCommentsEntity>> getCommentsByUserId(@RequestParam String userId) {
         List<SubsidyReviewCommentsEntity> comments = subsidyReviewCommentsService.getCommentsByUserId(userId);
 
@@ -85,9 +85,6 @@ public class SubsidyReviewCommentsController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
-
-
-
 
 
     @GetMapping("/all")

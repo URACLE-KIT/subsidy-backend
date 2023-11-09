@@ -182,7 +182,7 @@ public class UserController {
 	}
 
 
-	@GetMapping("/find/userid")
+	@GetMapping("/find/userId")
 	public ResponseEntity<?> findUserIdByEmail(@RequestParam String email) {
 		try {
 			String userId = userService.getUserIdByEmail(email);
