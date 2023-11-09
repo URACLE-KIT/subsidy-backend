@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/subsidies-review")
 public class SubsidyReviewsController {
+
     @Autowired
     private SubsidyReviewsService subsidyReviewsService;
 
@@ -71,6 +72,17 @@ public class SubsidyReviewsController {
 
         if (reviews != null && !reviews.isEmpty()) {
             return ResponseEntity.ok(reviews);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @GetMapping("/search/reviewId")
+    public ResponseEntity<SubsidyReviewsEntity> getReviewByReviewId(@RequestParam Long reviewId) {
+        SubsidyReviewsEntity review = subsidyReviewsService.getReviewById(reviewId);
+
+        if (review != null) {
+            return ResponseEntity.ok(review);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }

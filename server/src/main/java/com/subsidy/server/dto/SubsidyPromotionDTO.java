@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 import java.sql.Timestamp;
 
 @Data
@@ -20,6 +19,8 @@ public class SubsidyPromotionDTO {
     private String title;
     private String content;
     private String img;
+    private int likes;
+    private int views;
     private Timestamp created_at;
     private Timestamp updated_at;
 }

@@ -46,9 +46,6 @@ public class SubsidyReviewsService {
         }
     }
 
-    public SubsidyReviewsEntity getReviewById(Long reviewId) {
-        return subsidyReviewsRepository.findById(reviewId).orElse(null);
-    }
 
     public SubsidyReviewsEntity updateSubsidyReview(SubsidyReviewsEntity review) {
         return subsidyReviewsRepository.save(review);
@@ -56,6 +53,11 @@ public class SubsidyReviewsService {
 
     public void deleteSubsidyReview(Long reviewId){
         subsidyReviewsRepository.deleteById(reviewId);
+    }
+
+
+    public SubsidyReviewsEntity getReviewById(Long reviewId) {
+        return subsidyReviewsRepository.findById(reviewId).orElse(null);
     }
 
     public List<SubsidyReviewsEntity> getReviewsByUserId(String userId) {
@@ -66,6 +68,9 @@ public class SubsidyReviewsService {
         return subsidyReviewsRepository.findBySubsidyId(subsidyId);
     }
 
+    public List<SubsidyReviewsEntity> getAllSubsidyReviews() {
+        return subsidyReviewsRepository.findAll();
+    }
 
     public SubsidyReviewsEntity incrementViews(Long id) {
         SubsidyReviewsEntity review = subsidyReviewsRepository.findById(id).orElse(null);
@@ -87,9 +92,7 @@ public class SubsidyReviewsService {
         }
     }
 
-    public List<SubsidyReviewsEntity> getAllSubsidyReviews() {
-        return subsidyReviewsRepository.findAll();
-    }
+
 
 
 

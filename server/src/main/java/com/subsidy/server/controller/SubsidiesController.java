@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import com.subsidy.server.dto.SubsidiesDTO;
 import com.subsidy.server.model.SubsidiesEntity;
-import com.subsidy.server.model.SubsidyReviewsEntity;
 import com.subsidy.server.service.SubsidiesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -82,6 +81,7 @@ public class SubsidiesController {
             subsidyDTO.setApplication_process(subsidy.getApplication_process());
             subsidyDTO.setApplication_process_url(subsidy.getApplication_process_url());
             subsidyDTO.setViews(subsidy.getViews());
+            subsidyDTO.setNumComments(subsidy.getNumComments());
 
             return ResponseEntity.ok(subsidyDTO);
         } else {

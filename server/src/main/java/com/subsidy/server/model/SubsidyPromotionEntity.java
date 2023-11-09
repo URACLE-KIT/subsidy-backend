@@ -35,6 +35,12 @@ public class SubsidyPromotionEntity {
     @Column(length = 255)
     private String img;
 
+    @Column(columnDefinition = "INT DEFAULT 0")
+    private int likes;
+
+    @Column(columnDefinition = "INT DEFAULT 0")
+    private int views;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
     private Timestamp created_at;
