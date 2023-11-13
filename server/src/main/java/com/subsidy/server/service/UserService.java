@@ -93,4 +93,22 @@ public class UserService {
         LocalDate currentDate = LocalDate.now();
         return Period.between(birthday, currentDate).getYears();
     }
+
+    public void addUserCategory(String userId, String category) {
+        UserEntity user = userRepository.findById(userId).orElse(null);
+        if (user != null) {
+            user.addCategory(category);
+            userRepository.save(user);
+        }
+    }
+
+    public void deleteUserCategory(String userId, String category) {
+        UserEntity user = userRepository.findById(userId).orElse(null);
+        if (user != null) {
+            user.removeCategory(category);
+            userRepository.save(user);
+        }
+    }
+
+
 }

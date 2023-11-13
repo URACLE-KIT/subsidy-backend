@@ -1,14 +1,14 @@
 package com.subsidy.server.model;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.GenericGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -62,6 +62,11 @@ public class UserEntity {
     @Column(name = "marital_status")
     private boolean maritalStatus;
 
+    @ElementCollection
+    @CollectionTable(name = "category_list", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "category")
+    private List<String> categoryList;
+
     @PrePersist
     @PreUpdate
     private void calculateAgeAndLifeCycle() {
@@ -87,6 +92,19 @@ public class UserEntity {
         }
     }
 
+
+    public void addCategory(String category) {
+        if (this.categoryList == null) {
+            this.categoryList = new ArrayList<>();
+        }
+        this.categoryList.add(category);
+    }
+
+    public void removeCategory(String category) {
+        if (this.categoryList != null) {
+            this.categoryList.remove(category);
+        }
+    }
 
 
 }
