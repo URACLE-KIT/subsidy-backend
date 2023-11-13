@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 @Slf4j
 @Service
 public class UserService {
@@ -79,5 +82,15 @@ public class UserService {
 
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
+    }
+
+    public boolean isValidAge(LocalDate birthday) {
+        int age = calculateAge(birthday);
+        return age >= 13;
+    }
+
+    private int calculateAge(LocalDate birthday) {
+        LocalDate currentDate = LocalDate.now();
+        return Period.between(birthday, currentDate).getYears();
     }
 }

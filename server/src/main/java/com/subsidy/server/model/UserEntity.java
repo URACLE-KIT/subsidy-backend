@@ -2,15 +2,20 @@ package com.subsidy.server.model;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.Period;
+
 import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.GenericGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UpdateTimestamp;
+
 
 @Data
 @Entity
@@ -38,7 +43,7 @@ public class UserEntity {
     private char gender;
 
     @Column(name = "birthday")
-    private Date birthday;
+    private LocalDate birthday;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
@@ -47,4 +52,41 @@ public class UserEntity {
     @Column(name = "updated_at", nullable = false)
     @UpdateTimestamp
     private Timestamp updated_at;
+
+    @Column(name = "age")
+    private int age;
+
+    @Enumerated(EnumType.STRING)
+    private LifeCycle lifeCycle;
+
+    @Column(name = "marital_status")
+    private boolean maritalStatus;
+
+    @PrePersist
+    @PreUpdate
+    private void calculateAgeAndLifeCycle() {
+        if (birthday != null) {
+            LocalDate currentDate = LocalDate.now();
+            LocalDate birthDate = birthday;
+            this.age = Period.between(birthDate, currentDate).getYears();
+            calculateLifeCycleEnum();
+        }
+    }
+
+    private void calculateLifeCycleEnum() {
+        if (age >= 13 && age < 19) {
+            lifeCycle = LifeCycle.Teenager;
+        } else if (age >= 19 && age < 30) {
+            lifeCycle = LifeCycle.Youth;
+        } else if (age >= 30 && age < 50) {
+            lifeCycle = LifeCycle.MiddleAge;
+        } else if (age >= 50 && age < 65) {
+            lifeCycle = LifeCycle.Senior;
+        } else if (age >= 65) {
+            lifeCycle = LifeCycle.Elderly;
+        }
+    }
+
+
+
 }

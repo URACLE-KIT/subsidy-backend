@@ -40,6 +40,7 @@ public class SubsidyReviewsService {
             review.setSubsidy(subsidy);
             review.setTitle(subsidyReview.getTitle());
             review.setContent(subsidyReview.getContent());
+            review.setNumComments(subsidyReview.getNumComments());
             return subsidyReviewsRepository.save(review);
         } else {
             return null;
