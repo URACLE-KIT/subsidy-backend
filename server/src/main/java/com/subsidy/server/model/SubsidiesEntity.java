@@ -7,11 +7,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Entity
-@Table(name = "SUBSIDIES")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "SUBSIDIES")
 public class SubsidiesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,5 +52,5 @@ public class SubsidiesEntity {
     private int views;
 
     @Column(columnDefinition = "INT DEFAULT 0")
-    private int numComments;
+    private int numReviews;
 }

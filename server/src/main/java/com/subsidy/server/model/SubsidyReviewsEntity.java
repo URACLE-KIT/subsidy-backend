@@ -44,6 +44,9 @@ public class SubsidyReviewsEntity {
     @Column(columnDefinition = "INT DEFAULT 0")
     private int views;
 
+    @Column(columnDefinition = "INT DEFAULT 0")
+    private int numComments;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
     private Timestamp created_at;
@@ -51,4 +54,6 @@ public class SubsidyReviewsEntity {
     @Column(name = "updated_at", nullable = false)
     @UpdateTimestamp
     private Timestamp updated_at;
+
+
 }

@@ -64,8 +64,6 @@ public class SubsidyReviewCommentsService {
         return subsidyReviewCommentsRepository.findByReviewsId(subsidyReviewId);
     }
 
-
-
     public List<SubsidyReviewCommentsEntity> getAllComments() {
         return subsidyReviewCommentsRepository.findAll();
     }

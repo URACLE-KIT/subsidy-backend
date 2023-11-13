@@ -1,5 +1,6 @@
 package com.subsidy.server.controller;
 
+import java.time.LocalDate;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,6 +52,7 @@ public class UserController {
 					.birthday(user.getBirthday())
 					.created_at(user.getCreated_at())
 					.updated_at(user.getUpdated_at())
+					.age(user.getAge())
 					.token(token)
 					.build();
 
@@ -64,40 +66,47 @@ public class UserController {
 	}
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO) {
-	    try {
-	        if (userService.existsByEmail(userDTO.getEmail())) {
-	            throw new Exception("이미 가입된 이메일 주소");
-	        }
+		try {
+			if (userService.existsByEmail(userDTO.getEmail())) {
+				throw new Exception("이미 가입된 이메일 주소");
+			}
 
-	        UserEntity user = UserEntity.builder()
-	                .email(userDTO.getEmail())
-	                .password(passwordEncoder.encode(userDTO.getPassword()))
-					.name(userDTO.getName())
-					.gender(userDTO.getGender())
-					.birthday(userDTO.getBirthday())
-					.created_at(userDTO.getCreated_at())
-					.updated_at(userDTO.getUpdated_at())
-	                .build();
+			LocalDate birthday = userDTO.getBirthday();
 
-	        UserEntity registeredUser = userService.create(user);
-	        UserDTO responseUserDTO = UserDTO.builder()
-					.id(registeredUser.getId())
-					.email(userDTO.getEmail())
-					.password(passwordEncoder.encode(userDTO.getPassword()))
-					.gender(userDTO.getGender())
-					.birthday(userDTO.getBirthday())
-					.name(userDTO.getName())
-					.created_at(userDTO.getCreated_at())
-					.updated_at(userDTO.getUpdated_at())
-	                .build();
-	        return ResponseEntity.ok().body(responseUserDTO);
-	    } catch (Exception e) {
-	        ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
-	        return ResponseEntity.badRequest().body(responseDTO);
-	    }
+			// 회원가입 시 나이 검증
+			if (userService.isValidAge(birthday)) {
+				UserEntity user = UserEntity.builder()
+						.email(userDTO.getEmail())
+						.password(passwordEncoder.encode(userDTO.getPassword()))
+						.name(userDTO.getName())
+						.gender(userDTO.getGender())
+						.birthday(birthday)
+						.created_at(userDTO.getCreated_at())
+						.updated_at(userDTO.getUpdated_at())
+						.maritalStatus(userDTO.isMaritalStatus())
+						.build();
+
+				UserEntity registeredUser = userService.create(user);
+				UserDTO responseUserDTO = UserDTO.builder()
+						.id(registeredUser.getId())
+						.email(registeredUser.getEmail())
+						.password(passwordEncoder.encode(registeredUser.getPassword()))
+						.gender(registeredUser.getGender())
+						.birthday(birthday)
+						.name(registeredUser.getName())
+						.created_at(registeredUser.getCreated_at())
+						.updated_at(registeredUser.getUpdated_at())
+						.maritalStatus(userDTO.isMaritalStatus())
+						.build();
+				return ResponseEntity.ok().body(responseUserDTO);
+			} else {
+				throw new Exception("13세 미만의 회원은 가입할 수 없습니다.");
+			}
+		} catch (Exception e) {
+			ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
+			return ResponseEntity.badRequest().body(responseDTO);
+		}
 	}
-
-
 	@PatchMapping("/update")
 	public ResponseEntity<?> updateUser(@RequestParam String id, @RequestBody UserDTO userDTO) {
 		try {
@@ -128,6 +137,7 @@ public class UserController {
 					.birthday(existingUser.getBirthday())
 					.password(null)
 					.created_at(userDTO.getCreated_at())
+					.age(userDTO.getAge())
 					.updated_at(userDTO.getUpdated_at())
 					.build();
 
