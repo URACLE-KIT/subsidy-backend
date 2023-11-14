@@ -30,7 +30,7 @@ public class UserDTO {
     private Timestamp created_at;
     private Timestamp updated_at;
     private int age;
-    private boolean maritalStatus;
+    private char maritalStatus;
 
     // 비밀번호 재설정을 위한 변수 entity에는 정의되어있지 않음
     private String currentPassword;
