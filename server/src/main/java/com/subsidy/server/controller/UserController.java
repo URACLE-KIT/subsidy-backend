@@ -1,6 +1,7 @@
 package com.subsidy.server.controller;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -220,10 +221,22 @@ public class UserController {
 	}
 
 
+
 	@DeleteMapping("/delete-category")
 	public ResponseEntity<String> removeUserCategory(@RequestParam String userId, @RequestParam String category) {
 		userService.deleteUserCategory(userId, category);
 		return ResponseEntity.ok("Category removed successfully");
+	}
+
+	@GetMapping("/category-list")
+	public ResponseEntity<List<String>> getUserCategoryList(@RequestParam String userId) {
+		UserEntity user = userService.getUserById(userId);
+
+		if (user != null && user.getCategoryList() != null) {
+			return ResponseEntity.ok(user.getCategoryList());
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 }

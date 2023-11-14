@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Collections;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -107,6 +109,16 @@ public class UserService {
         if (user != null) {
             user.removeCategory(category);
             userRepository.save(user);
+        }
+    }
+
+    public List<String> getUserCategoryList(String userId) {
+        UserEntity user = userRepository.findById(userId).orElse(null);
+
+        if (user != null && user.getCategoryList() != null) {
+            return user.getCategoryList();
+        } else {
+            return Collections.emptyList();
         }
     }
 
