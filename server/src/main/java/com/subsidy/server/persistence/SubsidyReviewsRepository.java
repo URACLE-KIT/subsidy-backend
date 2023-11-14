@@ -8,7 +8,5 @@ import java.util.List;
 
 public interface SubsidyReviewsRepository extends JpaRepository<SubsidyReviewsEntity, Long> {
     List<SubsidyReviewsEntity> findByUserId(String userId);
-
-
     List<SubsidyReviewsEntity> findBySubsidyId(Long subsidyReviewId);
 }

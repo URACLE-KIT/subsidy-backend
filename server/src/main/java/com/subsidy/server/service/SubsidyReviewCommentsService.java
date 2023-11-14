@@ -52,8 +52,8 @@ public class SubsidyReviewCommentsService {
         return subsidyReviewCommentsRepository.save(comments);
     }
 
-    public void deleteSubsidyReview(Long commentId){
-        subsidyReviewsRepository.deleteById(commentId);
+    public void deleteSubsidyReviewComment(Long commentId) {
+        subsidyReviewCommentsRepository.deleteById(commentId);
     }
 
     public List<SubsidyReviewCommentsEntity> getCommentsByUserId(String userId) {

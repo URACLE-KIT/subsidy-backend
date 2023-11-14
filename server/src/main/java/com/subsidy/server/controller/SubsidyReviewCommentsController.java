@@ -54,14 +54,8 @@ public class SubsidyReviewCommentsController {
 
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteReviewComment(@RequestParam Long commentId) {
-        SubsidyReviewCommentsEntity existingComment = subsidyReviewCommentsService.getCommentById(commentId);
-
-        if (existingComment != null) {
-            subsidyReviewCommentsService.deleteSubsidyReview(commentId);
-            return ResponseEntity.status(HttpStatus.OK).body("Comment with ID " + commentId + " has been deleted.");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Comment with ID " + commentId + " was not found or could not be deleted.");
-        }
+        subsidyReviewCommentsService.deleteSubsidyReviewComment(commentId);
+        return ResponseEntity.ok("Comment with ID " + commentId + " has been deleted.");
     }
 
     @GetMapping("/search/userId")
