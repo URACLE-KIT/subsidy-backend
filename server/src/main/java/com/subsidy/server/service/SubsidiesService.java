@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.subsidy.server.persistence.SubsidiesRepository;
 import com.subsidy.server.dto.SubsidiesDTO;
 import com.subsidy.server.model.SubsidiesEntity;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Slf4j
@@ -80,6 +81,11 @@ public class SubsidiesService {
         } else {
             return null;
         }
+    }
+
+    @Transactional
+    public void resetAllViewsToZero() {
+        subsidyRepository.findAll().forEach(subsidiesEntity -> subsidiesEntity.setViews(0));
     }
 
 

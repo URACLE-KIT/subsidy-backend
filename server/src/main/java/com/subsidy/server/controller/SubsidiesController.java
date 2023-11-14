@@ -99,5 +99,10 @@ public class SubsidiesController {
         }
     }
 
+    @PostMapping("/reset-views")
+    public void resetAllViewsToZero() {
+        subsidyService.resetAllViewsToZero();
+    }
+
 
 }
