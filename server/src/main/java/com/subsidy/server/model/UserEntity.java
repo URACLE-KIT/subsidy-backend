@@ -42,6 +42,9 @@ public class UserEntity {
     @Column(name = "gender", nullable = false)
     private char gender;
 
+    @Column(name = "maritalstatus" , nullable = false)
+    private char maritalStatus;
+
     @Column(name = "birthday")
     private LocalDate birthday;
 
@@ -59,8 +62,7 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private LifeCycle lifeCycle;
 
-    @Column(name = "marital_status")
-    private boolean maritalStatus;
+
 
     @ElementCollection
     @CollectionTable(name = "category_list", joinColumns = @JoinColumn(name = "user_id"))

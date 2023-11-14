@@ -77,7 +77,7 @@ public class UserController {
 						.birthday(birthday)
 						.created_at(userDTO.getCreated_at())
 						.updated_at(userDTO.getUpdated_at())
-						.maritalStatus(userDTO.isMaritalStatus())
+						.maritalStatus(userDTO.getMaritalStatus())
 						.build();
 
 				UserEntity registeredUser = userService.create(user);
@@ -90,7 +90,7 @@ public class UserController {
 						.name(registeredUser.getName())
 						.created_at(registeredUser.getCreated_at())
 						.updated_at(registeredUser.getUpdated_at())
-						.maritalStatus(userDTO.isMaritalStatus())
+						.maritalStatus(userDTO.getMaritalStatus())
 						.build();
 				return ResponseEntity.ok().body(responseUserDTO);
 			} else {
@@ -165,17 +165,12 @@ public class UserController {
 	@PostMapping("/update/password")
 	public ResponseEntity<?> updatePassword(@RequestBody UserDTO userDTO) {
 		try {
-			UserEntity user = userService.getUserByEmail(userDTO.getEmail());
-
+			UserEntity user = userService.getUserById(userDTO.getId());
 
 			if (user != null) {
-				if (passwordEncoder.matches(userDTO.getCurrentPassword(), user.getPassword())) {
-					user.setPassword(passwordEncoder.encode(userDTO.getNewPassword()));
-					userService.updateUser(user);
-					return ResponseEntity.ok(ResponseDTO.builder().message("Password change successful").build());
-				} else {
-					return ResponseEntity.badRequest().body(ResponseDTO.builder().error("Current password is incorrect").build());
-				}
+				user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+				userService.updateUser(user);
+				return ResponseEntity.ok(ResponseDTO.builder().message("Password change successful").build());
 			} else {
 				return ResponseEntity.notFound().build();
 			}
@@ -184,7 +179,6 @@ public class UserController {
 			return ResponseEntity.badRequest().body(responseDTO);
 		}
 	}
-
 
 	@GetMapping("/find/userId")
 	public ResponseEntity<?> findUserIdByEmail(@RequestParam String email) {
