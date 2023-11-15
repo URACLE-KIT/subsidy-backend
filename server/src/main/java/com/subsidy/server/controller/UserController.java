@@ -124,6 +124,8 @@ public class UserController {
 				existingUser.setBirthday(userDTO.getBirthday());
 			}
 
+			existingUser.setMaritalStatus(userDTO.getMaritalStatus());
+
 
 			userService.updateUser(existingUser);
 
