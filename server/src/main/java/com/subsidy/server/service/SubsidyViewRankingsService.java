@@ -28,6 +28,7 @@ public class SubsidyViewRankingsService {
     @Autowired
     private SubsidiesRepository subsidiesRepository;
 
+    /*
     @PostConstruct
     public void addSubsidyViewRankingsData() {
         for (int i = 1; i <= 240; i++) {
@@ -42,7 +43,7 @@ public class SubsidyViewRankingsService {
             }
         }
     }
-
+    */
     @Transactional
     public void incrementViews(Long subsidyId) {
         SubsidyViewRankingsEntity subsidyViewRankings = subsidyViewRankingsRepository.findBySubsidy_Id(subsidyId);

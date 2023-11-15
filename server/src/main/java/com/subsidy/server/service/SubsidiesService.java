@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.subsidy.server.model.SubsidyReviewsEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -86,6 +87,28 @@ public class SubsidiesService {
     @Transactional
     public void resetAllViewsToZero() {
         subsidyRepository.findAll().forEach(subsidiesEntity -> subsidiesEntity.setViews(0));
+    }
+
+
+    public SubsidiesEntity incrementNumReviews(Long id) {
+        SubsidiesEntity subsidy = subsidyRepository.findById(id).orElse(null);
+        if (subsidy != null) {
+            subsidy.setNumReviews(subsidy.getNumReviews() + 1);
+            return subsidyRepository.save(subsidy);
+        } else {
+            return null;
+        }
+    }
+
+    public SubsidiesEntity decrementNumReviews(Long id) {
+        SubsidiesEntity subsidy = subsidyRepository.findById(id).orElse(null);
+        if (subsidy != null) {
+            if(subsidy.getNumReviews() > 0)
+                subsidy.setNumReviews(subsidy.getNumReviews() - 1);
+            return subsidyRepository.save(subsidy);
+        } else {
+            return null;
+        }
     }
 
 

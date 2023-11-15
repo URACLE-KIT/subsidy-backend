@@ -28,6 +28,7 @@ public class SubsidyFemaleViewRankingsService {
     @Autowired
     private SubsidiesRepository subsidiesRepository;
 
+    /*
     @PostConstruct
     public void addSubsidyFemaleViewRankingsData() {
         for (int i = 1; i <= 240; i++) {
@@ -42,6 +43,8 @@ public class SubsidyFemaleViewRankingsService {
             }
         }
     }
+
+     */
 
     @Transactional
     public void incrementViews(Long subsidyId) {
