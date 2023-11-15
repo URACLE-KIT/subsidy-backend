@@ -46,7 +46,9 @@ public class UserController {
 					.birthday(user.getBirthday())
 					.created_at(user.getCreated_at())
 					.updated_at(user.getUpdated_at())
+					.lifecycle(user.getLifeCycle())
 					.age(user.getAge())
+
 					.token(token)
 					.build();
 
