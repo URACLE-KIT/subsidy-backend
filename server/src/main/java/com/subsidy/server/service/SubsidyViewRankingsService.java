@@ -1,9 +1,8 @@
 package com.subsidy.server.service;
 
-
 import com.subsidy.server.dto.SubsidyViewRankingsInfoDTO;
 import com.subsidy.server.model.SubsidiesEntity;
-import com.subsidy.server.model.SubsidyViewRankings;
+import com.subsidy.server.model.SubsidyViewRankingsEntity;
 import com.subsidy.server.persistence.SubsidiesRepository;
 import com.subsidy.server.persistence.SubsidyViewRankingsRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Slf4j
@@ -25,14 +25,13 @@ public class SubsidyViewRankingsService {
     @Autowired
     private SubsidyViewRankingsRepository subsidyViewRankingsRepository;
 
-
     @Autowired
     private SubsidiesRepository subsidiesRepository;
 
-    @Transactional
+    @PostConstruct
     public void addSubsidyViewRankingsData() {
         for (int i = 1; i <= 240; i++) {
-            SubsidyViewRankings subsidyViewRankings = new SubsidyViewRankings();
+            SubsidyViewRankingsEntity subsidyViewRankings = new SubsidyViewRankingsEntity();
 
             SubsidiesEntity subsidy = subsidiesRepository.findById((long) i).orElse(null);
 
@@ -46,7 +45,7 @@ public class SubsidyViewRankingsService {
 
     @Transactional
     public void incrementViews(Long subsidyId) {
-        SubsidyViewRankings subsidyViewRankings = subsidyViewRankingsRepository.findBySubsidy_Id(subsidyId);
+        SubsidyViewRankingsEntity subsidyViewRankings = subsidyViewRankingsRepository.findBySubsidy_Id(subsidyId);
         if (subsidyViewRankings != null) {
             int currentViews = subsidyViewRankings.getViews();
             subsidyViewRankings.setViews(currentViews + 1);
@@ -66,8 +65,8 @@ public class SubsidyViewRankingsService {
     public void resetSubsidyViews() {
         try {
             // SubsidyViews 테이블의 모든 레코드의 views를 0으로 초기화
-            List<SubsidyViewRankings> subsidyViewsList = subsidyViewRankingsRepository.findAll();
-            for (SubsidyViewRankings subsidyViews : subsidyViewsList) {
+            List<SubsidyViewRankingsEntity> subsidyViewsList = subsidyViewRankingsRepository.findAll();
+            for (SubsidyViewRankingsEntity subsidyViews : subsidyViewsList) {
                 subsidyViews.setViews(0);
             }
             subsidyViewRankingsRepository.saveAll(subsidyViewsList); // saveAll 메서드 사용

@@ -14,12 +14,6 @@ public class SubsidyViewRankingsController {
     @Autowired
     private SubsidyViewRankingsService subsidyViewRankingsService;
 
-    @GetMapping("/create")
-    public String addSubsidyViewRankingsData() {
-        subsidyViewRankingsService.addSubsidyViewRankingsData();
-        return "Data added successfully!";
-    }
-
     @PostMapping("/increment-views")
     public String incrementViews(@RequestParam Long subsidyId) {
         subsidyViewRankingsService.incrementViews(subsidyId);

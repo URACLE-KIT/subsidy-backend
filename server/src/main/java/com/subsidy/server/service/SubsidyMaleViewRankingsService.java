@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 
@@ -26,7 +27,7 @@ public class SubsidyMaleViewRankingsService {
     @Autowired
     private SubsidiesRepository subsidiesRepository;
 
-    @Transactional
+    @PostConstruct
     public void addSubsidyMaleViewRankingsData() {
         for (int i = 1; i <= 240; i++) {
             SubsidyMaleViewRankingsEntity subsidyMaleViewRankings = new SubsidyMaleViewRankingsEntity();
@@ -53,7 +54,7 @@ public class SubsidyMaleViewRankingsService {
 
 
 
-    public List<SubsidyViewRankingsInfoDTO> findTop3SubsidyMaleInfoByViews() {
+    public List<SubsidyViewRankingsInfoDTO> findTop3SubsidyInfoByMaleViews() {
         Pageable pageable = PageRequest.of(0, 3, Sort.by("views").descending());
         return subsidyMaleViewRankingsRepository.findTop3SubsidyInfoByViews(pageable).getContent();
     }
