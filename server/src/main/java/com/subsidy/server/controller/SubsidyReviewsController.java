@@ -120,6 +120,27 @@ public class SubsidyReviewsController {
         }
     }
 
+
+    @PutMapping("/increment-numComments")
+    public ResponseEntity<SubsidyReviewsEntity> incrementNumComments(@RequestParam Long id) {
+        SubsidyReviewsEntity review = subsidyReviewsService.incrementNumComments(id);
+        if (review != null) {
+            return ResponseEntity.ok(review);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @PutMapping("/decrement-numComments")
+    public ResponseEntity<SubsidyReviewsEntity> decrementNumComments(@RequestParam Long id) {
+        SubsidyReviewsEntity review = subsidyReviewsService.decrementNumComments(id);
+        if (review != null) {
+            return ResponseEntity.ok(review);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
     @GetMapping("/all")
     public ResponseEntity<List<SubsidyReviewsEntity>> getAllReviews() {
         List<SubsidyReviewsEntity> reviews = subsidyReviewsService.getAllSubsidyReviews();
