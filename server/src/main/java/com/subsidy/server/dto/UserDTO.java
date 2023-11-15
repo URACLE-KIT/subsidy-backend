@@ -1,19 +1,14 @@
 package com.subsidy.server.dto;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.Period;
-import java.util.HashSet;
-import java.util.Set;
 
+import com.subsidy.server.model.LifeCycle;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Column;
-import javax.persistence.PrePersist;
+import org.apache.catalina.Lifecycle;
 
 @Data
 @Builder
@@ -29,6 +24,7 @@ public class UserDTO {
     private LocalDate birthday;
     private Timestamp created_at;
     private Timestamp updated_at;
+    private LifeCycle lifecycle;
     private int age;
     private char maritalStatus;
 
