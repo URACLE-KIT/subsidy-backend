@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.subsidy.server.dto.SubsidiesDTO;
 import com.subsidy.server.model.SubsidiesEntity;
+import com.subsidy.server.model.SubsidyReviewsEntity;
 import com.subsidy.server.service.SubsidiesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -104,5 +105,25 @@ public class SubsidiesController {
         subsidyService.resetAllViewsToZero();
     }
 
+
+    @PutMapping("/increment-numReviews")
+    public ResponseEntity<SubsidiesEntity> incrementNumReviews(@RequestParam Long id) {
+        SubsidiesEntity subsidy = subsidyService.incrementNumReviews(id);
+        if (subsidy != null) {
+            return ResponseEntity.ok(subsidy);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @PutMapping("/decrement-numReviews")
+    public ResponseEntity<SubsidiesEntity> decrementNumReviews(@RequestParam Long id) {
+        SubsidiesEntity subsidy = subsidyService.decrementNumReviews(id);
+        if (subsidy != null) {
+            return ResponseEntity.ok(subsidy);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
 
 }

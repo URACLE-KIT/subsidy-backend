@@ -26,6 +26,7 @@ public class SubsidyTeenagerViewRankingsService {
     @Autowired
     private SubsidiesRepository subsidiesRepository;
 
+    /*
     @PostConstruct
     public void addSubsidyTeenagerViewRankingsData() {
         for (int i = 1; i <= 240; i++) {
@@ -40,6 +41,8 @@ public class SubsidyTeenagerViewRankingsService {
             }
         }
     }
+    */
+
 
     @Transactional
     public void incrementViews(Long subsidyId) {

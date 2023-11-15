@@ -25,6 +25,7 @@ public class SubsidyMiddleAgeViewRankingsService {
     @Autowired
     private SubsidiesRepository subsidiesRepository;
 
+    /*
     @PostConstruct
     public void addSubsidyMiddleAgeViewRankingsData() {
         for (int i = 1; i <= 240; i++) {
@@ -39,6 +40,8 @@ public class SubsidyMiddleAgeViewRankingsService {
             }
         }
     }
+
+     */
 
     @Transactional
     public void incrementViews(Long subsidyId) {
