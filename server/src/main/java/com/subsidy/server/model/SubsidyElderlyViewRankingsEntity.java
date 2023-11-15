@@ -7,14 +7,14 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "SUBSIDYVIEWRANKINGS")
-public class SubsidyViewRankings {
+@Table(name = "SUBSIDYELDERLYVIEWRANKINGS")
+
+public class SubsidyElderlyViewRankingsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,7 +23,6 @@ public class SubsidyViewRankings {
     @JoinColumn(name = "subsidy_id", referencedColumnName = "id")
     private SubsidiesEntity subsidy;
 
-    @Column(name = "subsidy_views", columnDefinition = "INT DEFAULT 0")
+    @Column(name = "subsidy_elderly_views", columnDefinition = "INT DEFAULT 0")
     private int views;
-
 }

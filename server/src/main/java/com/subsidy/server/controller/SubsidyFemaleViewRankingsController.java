@@ -1,7 +1,6 @@
 package com.subsidy.server.controller;
 
 import com.subsidy.server.dto.SubsidyViewRankingsInfoDTO;
-import com.subsidy.server.persistence.SubsidyFemaleViewRankingsRepository;
 import com.subsidy.server.service.SubsidyFemaleViewRankingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +15,6 @@ public class SubsidyFemaleViewRankingsController {
     @Autowired
     private SubsidyFemaleViewRankingsService subsidyFemaleViewRankingsService;
 
-    @GetMapping("/create")
-    public String addSubsidyViewRankingsData() {
-        subsidyFemaleViewRankingsService.addSubsidyFemaleViewRankingsData();
-        return "Data added successfully!";
-    }
-
     @PostMapping("/increment-views")
     public ResponseEntity<String> incrementViews(@RequestParam Long subsidyId) {
         subsidyFemaleViewRankingsService.incrementViews(subsidyId);
@@ -29,6 +22,6 @@ public class SubsidyFemaleViewRankingsController {
     }
     @GetMapping("/subsidyRanking_Info")
     public List<SubsidyViewRankingsInfoDTO> getTop3SubsidyInfoByViews() {
-        return subsidyFemaleViewRankingsService.findTop3SubsidyFemaleInfoByViews();
+        return subsidyFemaleViewRankingsService.findTop3SubsidyInfoByFemaleViews();
     }
 }

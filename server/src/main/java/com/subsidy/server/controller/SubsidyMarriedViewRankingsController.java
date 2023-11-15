@@ -1,5 +1,6 @@
 package com.subsidy.server.controller;
 
+
 import com.subsidy.server.dto.SubsidyViewRankingsInfoDTO;
 import com.subsidy.server.service.SubsidyMaleViewRankingsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/subsidyMaleViewRankings")
-public class SubsidyMaleViewRankingsController {
-
+@RequestMapping("/v1/subsidyMarriedViewRankings")
+public class SubsidyMarriedViewRankingsController {
     @Autowired
     private SubsidyMaleViewRankingsService subsidyMaleViewRankingsService;
 
@@ -24,5 +24,4 @@ public class SubsidyMaleViewRankingsController {
     public List<SubsidyViewRankingsInfoDTO> getTop3SubsidyInfoByViews() {
         return subsidyMaleViewRankingsService.findTop3SubsidyInfoByMaleViews();
     }
-
 }
