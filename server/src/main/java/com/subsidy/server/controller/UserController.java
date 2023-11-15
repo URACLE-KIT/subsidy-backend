@@ -124,6 +124,7 @@ public class UserController {
 				existingUser.setBirthday(userDTO.getBirthday());
 			}
 
+
 			userService.updateUser(existingUser);
 
 			UserDTO responseUserDTO = UserDTO.builder()
@@ -134,6 +135,7 @@ public class UserController {
 					.password(null)
 					.created_at(userDTO.getCreated_at())
 					.age(userDTO.getAge())
+					.maritalStatus(userDTO.getMaritalStatus())
 					.updated_at(userDTO.getUpdated_at())
 					.build();
 
