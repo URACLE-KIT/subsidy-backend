@@ -93,8 +93,24 @@ public class SubsidyReviewsService {
         }
     }
 
+    public SubsidyReviewsEntity incrementNumComments(Long id) {
+        SubsidyReviewsEntity review = subsidyReviewsRepository.findById(id).orElse(null);
+        if (review != null) {
+            review.setNumComments(review.getNumComments() + 1);
+            return subsidyReviewsRepository.save(review);
+        } else {
+            return null;
+        }
+    }
 
-
-
-
+    public SubsidyReviewsEntity decrementNumComments(Long id) {
+        SubsidyReviewsEntity review = subsidyReviewsRepository.findById(id).orElse(null);
+        if (review != null) {
+            if(review.getNumComments() > 0)
+                review.setNumComments(review.getNumComments() - 1);
+            return subsidyReviewsRepository.save(review);
+        } else {
+            return null;
+        }
+    }
 }
