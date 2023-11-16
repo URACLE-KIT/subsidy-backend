@@ -6,16 +6,25 @@ import com.subsidy.server.service.SubsidyCategoryViewRankingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1/subsidyCategoryViewRankings")
 public class SubsidyCategoryViewRankingsController {
     @Autowired
     private SubsidyCategoryViewRankingsService subsidyCategoryViewRankingsService;
+
+    @GetMapping("/views")
+    public ResponseEntity<SubsidyCategoryViewRankingsEntity> getEntityById(@RequestParam Long id) {
+        SubsidyCategoryViewRankingsEntity entity = subsidyCategoryViewRankingsService.getEntityById(id);
+        if (entity != null) {
+            return ResponseEntity.ok(entity);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
 
     // Teenager
     @PutMapping("/increment/teenager/daily-safety")

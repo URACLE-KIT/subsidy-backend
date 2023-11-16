@@ -16,11 +16,18 @@ public class SubsidyCategoryViewRankingsService {
     private SubsidyCategoryViewRankingsRepository subsidyCategoryViewRankingsRepository;
 
 
+    /*
     @PostConstruct
     public void addSubsidyCategoryViewRankingsData() {
             SubsidyCategoryViewRankingsEntity subsidyCategoryViewRankings = new SubsidyCategoryViewRankingsEntity();
             subsidyCategoryViewRankingsRepository.save(subsidyCategoryViewRankings);
     }
+    */
+
+    public SubsidyCategoryViewRankingsEntity getEntityById(Long id) {
+        return subsidyCategoryViewRankingsRepository.findById(id).orElse(null);
+    }
+
 
 
 
@@ -550,7 +557,7 @@ public class SubsidyCategoryViewRankingsService {
     public SubsidyCategoryViewRankingsEntity incrementMaleHousingSelfRelianceViews(Long id) {
         SubsidyCategoryViewRankingsEntity views = subsidyCategoryViewRankingsRepository.findById(id).orElse(null);
         if (views != null) {
-            views.setMale_HousingSelfReliance_Views(views.getMale_HousingSelfReliance_Views()s + 1);
+            views.setMale_HousingSelfReliance_Views(views.getMale_HousingSelfReliance_Views() + 1);
             return subsidyCategoryViewRankingsRepository.save(views);
         } else {
             return null;
