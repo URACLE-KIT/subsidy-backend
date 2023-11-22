@@ -19,6 +19,7 @@ public class SubsidyElderlyViewRankingsController {
         subsidyElderlyViewRankingsService.incrementViews(subsidyId);
         return ResponseEntity.ok("Views incremented for subsidy_id: " + subsidyId);
     }
+
     @GetMapping("/subsidyRanking_Info")
     public List<SubsidyViewRankingsInfoDTO> getTop3SubsidyInfoByViews() {
         return subsidyElderlyViewRankingsService.findTop3SubsidyInfoByElderlyViews();

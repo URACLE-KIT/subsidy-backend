@@ -26,10 +26,11 @@ public class SubsidyTeenagerViewRankingsService {
     @Autowired
     private SubsidiesRepository subsidiesRepository;
 
+
     /*
     @PostConstruct
     public void addSubsidyTeenagerViewRankingsData() {
-        for (int i = 1; i <= 240; i++) {
+        for (int i = 1; i <= 11757; i++) {
             SubsidyTeenagerViewRankingsEntity subsidyTeenagerViewRankings = new SubsidyTeenagerViewRankingsEntity();
 
             SubsidiesEntity subsidy = subsidiesRepository.findById((long) i).orElse(null);
@@ -41,7 +42,9 @@ public class SubsidyTeenagerViewRankingsService {
             }
         }
     }
-    */
+
+     */
+
 
 
     @Transactional

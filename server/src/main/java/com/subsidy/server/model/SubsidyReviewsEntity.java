@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @Entity
@@ -33,8 +34,7 @@ public class SubsidyReviewsEntity {
     @Column(length = 255, nullable = false)
     private String title;
 
-    @Lob
-    @Column(name = "content", nullable = false)
+    @Column(name = "content", nullable = false, length = 5000)
     private String content;
 
 
@@ -54,6 +54,9 @@ public class SubsidyReviewsEntity {
     @Column(name = "updated_at", nullable = false)
     @UpdateTimestamp
     private Timestamp updated_at;
+
+    @OneToMany(mappedBy = "reviews", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SubsidyReviewCommentsEntity> comments;
 
 
 }

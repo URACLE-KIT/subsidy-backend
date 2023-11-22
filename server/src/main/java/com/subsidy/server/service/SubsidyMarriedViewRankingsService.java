@@ -26,10 +26,11 @@ public class SubsidyMarriedViewRankingsService {
     @Autowired
     private SubsidiesRepository subsidiesRepository;
 
+
     /*
     @PostConstruct
     public void addSubsidyViewRankingsData() {
-        for (int i = 1; i <= 240; i++) {
+        for (int i = 1; i <= 11757; i++) {
             SubsidyMarriedViewRankingsEntity subsidyMarriedViewRankingsEntity = new SubsidyMarriedViewRankingsEntity();
 
             SubsidiesEntity subsidy = subsidiesRepository.findById((long) i).orElse(null);
@@ -43,6 +44,8 @@ public class SubsidyMarriedViewRankingsService {
     }
 
      */
+
+
 
     @Transactional
     public void incrementViews(Long subsidyId) {

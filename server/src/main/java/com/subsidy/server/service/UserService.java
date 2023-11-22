@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Collections;
@@ -49,21 +50,10 @@ public class UserService {
         userRepository.save(userEntity);
     }
 
-    public boolean deleteUser(final String email, final String password, final PasswordEncoder encoder) {
-        final UserEntity user = userRepository.findByEmail(email);
-        if (user != null && encoder.matches(password, user.getPassword())) {
-            userRepository.delete(user);
-            return true;
-        }
-        return false;
-    }
-
     public UserEntity getUser(final String email) {
         return userRepository.findByEmail(email);
     }
 
-
-    
     public String getUserIdByEmail(String email) {
         UserEntity user = userRepository.findByEmail(email);
 
@@ -121,6 +111,15 @@ public class UserService {
             return Collections.emptyList();
         }
     }
+
+    @Transactional
+    public void deleteUser(String userId) {
+        UserEntity user = userRepository.findById(userId).orElse(null);
+        if (user != null) {
+            userRepository.delete(user);
+        }
+    }
+
 
 
 }
