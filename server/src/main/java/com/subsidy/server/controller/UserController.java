@@ -124,7 +124,13 @@ public class UserController {
 				existingUser.setBirthday(userDTO.getBirthday());
 			}
 
-			existingUser.setMaritalStatus(userDTO.getMaritalStatus());
+			if(userDTO.getAge() > 12){
+				existingUser.setAge(userDTO.getAge());
+			}
+
+			if(userDTO.getMaritalStatus() == 'M' || userDTO.getMaritalStatus() == 'S'){
+				existingUser.setMaritalStatus(userDTO.getMaritalStatus());
+			}
 
 
 			userService.updateUser(existingUser);
@@ -133,12 +139,14 @@ public class UserController {
 					.email(existingUser.getEmail())
 					.id(existingUser.getId())
 					.name(existingUser.getName())
-					.birthday(existingUser.getBirthday())
+					.gender(existingUser.getGender())
+					.created_at(existingUser.getCreated_at())
+					.updated_at(existingUser.getUpdated_at())
 					.password(null)
-					.created_at(userDTO.getCreated_at())
-					.age(userDTO.getAge())
-					.maritalStatus(userDTO.getMaritalStatus())
-					.updated_at(userDTO.getUpdated_at())
+					.lifecycle(existingUser.getLifeCycle())
+					.birthday(existingUser.getBirthday())
+					.age(existingUser.getAge())
+					.maritalStatus(existingUser.getMaritalStatus())
 					.build();
 
 			return ResponseEntity.ok().body(responseUserDTO);
@@ -147,26 +155,6 @@ public class UserController {
 			return ResponseEntity.badRequest().body(responseDTO);
 		}
 	}
-
-	@DeleteMapping("/delete")
-	public ResponseEntity<?> deleteUser(@RequestBody UserDTO userDTO) {
-	    try {
-	        boolean deleted = userService.deleteUser(
-	                userDTO.getEmail(), 
-	                userDTO.getPassword(), 
-	                passwordEncoder);
-
-	        if (!deleted) {
-	            throw new Exception("이메일 또는 비밀번호가 올바르지 않습니다.");
-	        }
-
-	        return ResponseEntity.ok().body(ResponseDTO.builder().message("Successfully deleted user").build());
-	    } catch (Exception e) {
-	        ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
-	        return ResponseEntity.badRequest().body(responseDTO);
-	    }
-	}
-
 
 	@PostMapping("/update/password")
 	public ResponseEntity<?> updatePassword(@RequestBody UserDTO userDTO) {
@@ -236,6 +224,16 @@ public class UserController {
 			return ResponseEntity.ok(user.getCategoryList());
 		} else {
 			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@DeleteMapping("/delete")
+	public ResponseEntity<String> deleteUser(@RequestParam String userId) {
+		try {
+			userService.deleteUser(userId);
+			return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Error deleting user: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

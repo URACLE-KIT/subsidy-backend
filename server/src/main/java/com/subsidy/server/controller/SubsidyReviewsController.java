@@ -18,12 +18,16 @@ public class SubsidyReviewsController {
     private SubsidyReviewsService subsidyReviewsService;
 
     @PostMapping("/create")
-    public ResponseEntity<SubsidyReviewsEntity> createReview(@RequestParam String userId, @RequestParam Long subsidyId ,@RequestBody SubsidyReviewsEntity subsidyReview) {
+    public ResponseEntity<SubsidyReviewsEntity> createReview(
+            @RequestParam String userId,
+            @RequestParam Long subsidyId,
+            @RequestBody SubsidyReviewsEntity subsidyReview) {
+
         SubsidyReviewsEntity review = new SubsidyReviewsEntity();
         review.setTitle(subsidyReview.getTitle());
         review.setContent(subsidyReview.getContent());
 
-        SubsidyReviewsEntity createdReview = subsidyReviewsService.createSubsidyReview(userId, subsidyId , review);
+        SubsidyReviewsEntity createdReview = subsidyReviewsService.createSubsidyReview(userId, subsidyId, review);
 
         if (createdReview != null) {
             return ResponseEntity.status(HttpStatus.CREATED).body(createdReview);

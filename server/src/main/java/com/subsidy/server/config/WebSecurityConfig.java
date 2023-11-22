@@ -43,7 +43,7 @@ public class WebSecurityConfig {
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-            .antMatchers("/","/v1/**").permitAll()
+            .antMatchers("/", "/signup", "/login", "/v1/**", "/morpheus/**" , "/static/**" ,"/manifest.json", "/favicon.ico", "/logo192.png", "/logo.png","/image2.jpg","/image3.jpg","/image4.jpg").permitAll()
             .anyRequest()
             .authenticated()
             .and()

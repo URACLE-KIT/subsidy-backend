@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
 @Entity
@@ -37,5 +38,7 @@ public class SubsidyScrapsEntity {
     @Column(name = "updated_at", nullable = false)
     @UpdateTimestamp
     private Timestamp updated_at;
+
+
 
 }

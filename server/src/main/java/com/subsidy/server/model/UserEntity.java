@@ -25,7 +25,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Table(name = "USERS", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public class UserEntity {
     @Id
-    @GeneratedValue(generator = "system-uuid")
+    @GeneratedValue(generator = "system-uuid", strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "id")
     private String id;
@@ -68,6 +68,15 @@ public class UserEntity {
     @CollectionTable(name = "category_list", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "category")
     private List<String> categoryList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SubsidyReviewsEntity> reviews;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SubsidyScrapsEntity> scraps;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SubsidyReviewCommentsEntity> comments;
 
     @PrePersist
     @PreUpdate

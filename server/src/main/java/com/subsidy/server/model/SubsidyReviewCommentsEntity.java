@@ -30,8 +30,7 @@ public class SubsidyReviewCommentsEntity {
     @JoinColumn(name = "subsidy_review_id", referencedColumnName = "id")
     private SubsidyReviewsEntity reviews;
 
-    @Lob
-    @Column(name = "content", nullable = false)
+    @Column(name = "content", nullable = false, length = 767)
     private String content;
 
     @Column(name = "created_at", nullable = false, updatable = false)

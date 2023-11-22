@@ -30,7 +30,7 @@ public class SubsidyMaleViewRankingsService {
     /*
     @PostConstruct
     public void addSubsidyMaleViewRankingsData() {
-        for (int i = 1; i <= 240; i++) {
+        for (int i = 1; i <= 11757; i++) {
             SubsidyMaleViewRankingsEntity subsidyMaleViewRankings = new SubsidyMaleViewRankingsEntity();
 
             SubsidiesEntity subsidy = subsidiesRepository.findById((long) i).orElse(null);
@@ -42,8 +42,9 @@ public class SubsidyMaleViewRankingsService {
             }
         }
     }
+    */
 
-     */
+
     @Transactional
     public void incrementViews(Long subsidyId) {
         SubsidyMaleViewRankingsEntity subsidyMaleViewRankings = subsidyMaleViewRankingsRepository.findBySubsidy_Id(subsidyId);
