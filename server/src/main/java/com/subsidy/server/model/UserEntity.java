@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import lombok.AllArgsConstructor;
@@ -70,12 +71,15 @@ public class UserEntity {
     private List<String> categoryList;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<SubsidyReviewsEntity> reviews;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<SubsidyScrapsEntity> scraps;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<SubsidyReviewCommentsEntity> comments;
 
     @PrePersist

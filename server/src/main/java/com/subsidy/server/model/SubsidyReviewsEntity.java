@@ -1,6 +1,7 @@
 package com.subsidy.server.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -56,6 +57,7 @@ public class SubsidyReviewsEntity {
     private Timestamp updated_at;
 
     @OneToMany(mappedBy = "reviews", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<SubsidyReviewCommentsEntity> comments;
 
 
